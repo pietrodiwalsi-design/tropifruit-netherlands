@@ -14,7 +14,7 @@
       --dark: #1A1A2E; --dark2: #16213E; --white: #FFFFFF;
       --gray: #6B7280; --light: #F9FAFB; --border: #E5E7EB;
     }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
     body { font-family: 'Inter', sans-serif; color: var(--dark); background: var(--white); line-height: 1.6; }
 
     /* NAV */
@@ -31,6 +31,13 @@
     .nav-links a:hover { color: var(--dark); }
     .nav-cta { background: var(--mango); color: white; padding: 10px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: background 0.2s; }
     .nav-cta:hover { background: var(--mango-dark); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); border-radius: 2px; transition: all 0.3s; }
+    .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--border); padding: 16px 5%; flex-direction: column; gap: 4px; z-index: 99; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { padding: 12px 0; color: var(--dark); text-decoration: none; font-size: 1rem; font-weight: 500; border-bottom: 1px solid var(--border); }
+    .mobile-menu a:last-child { border: none; padding-top: 16px; }
+    .mobile-menu .mob-cta { background: var(--mango); color: white; padding: 13px 20px; border-radius: 8px; text-align: center; font-weight: 700; }
 
     /* HERO */
     .hero {
@@ -214,10 +221,12 @@
       .model-grid, .products-grid { grid-template-columns: 1fr 1fr; }
       .roadmap-grid { grid-template-columns: 1fr 1fr; }
       .market-numbers { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
     }
     @media (max-width: 600px) {
       .model-grid, .products-grid, .roadmap-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
       .hero-stats { grid-template-columns: 1fr; }
       .invest-highlights { gap: 24px; }
     }
@@ -235,7 +244,23 @@
     <li><a href="#roadmap">Roadmap</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Talk to Us →</a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#opportunity" onclick="closeMenu()">Opportunity</a>
+  <a href="#products" onclick="closeMenu()">Products</a>
+  <a href="#model" onclick="closeMenu()">Business Model</a>
+  <a href="#financials" onclick="closeMenu()">Financials</a>
+  <a href="#roadmap" onclick="closeMenu()">Roadmap</a>
+  <a href="#contact" class="mob-cta" onclick="closeMenu()">Talk to Us →</a>
+</div>
+<script>
+  function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+  function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
+  document.querySelectorAll('nav .nav-links a').forEach(a=>a.addEventListener('click',closeMenu));
+</script>
 
 <!-- HERO -->
 <section class="hero" id="home">
